@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 void setBalance(int, int);
 int setSpending(int, int);
@@ -22,6 +23,9 @@ int main () {
     printf("4. 카테고리별 지출 통계 보기\n");
     printf("5. 프로그램 종료\n==========================================================\n메뉴 입력 => ");
     scanf(" %d",&input);
+    if (!isdigit(input)){
+      getchar();
+    }
     switch (input){
       case 1:
         printf("이번 달 받은 용돈을 입력하세요.\n> ");
@@ -59,18 +63,25 @@ int main () {
 	return 0;
 }
 void setBalance(int balance, int remains) { // 2
+  if (balance < 0 || remains < 0){
+    printf("올바른 범위 내의 수를 입력 해주세요.\n");
+    return;
+  }
 	money = balance;
   restDate = remains; 
   return;
 }
 
-int setSpending(int amount, int catagory) { // 2
-	if (catagory < 6 && catagory > 0) {
-    if (money >= sumSpending() + amount) { spending[catagory - 1] = amount; return 1; } // 1 이면 입력 성공
+int setSpending(int amount, int category) { // 2
+  if (amount < 0 || category < 0){
+    printf("올바른 범위 내의 수를 입력 해주세요.\n");
+    return 0;
+  }
+	if (category < 6 && category > 0) {
+    if (money >= sumSpending() + amount) { spending[category - 1] = amount; return 1; } // 1 이면 입력 성공
     else { printf("입력된 지출이 자금보다 큽니다.\n"); return 0; } // 0 이면 입력 실패
-   
   } 
-  printf("입력 실패, %d 카테고리는 존재하지 않습니다.\n", catagory);
+  printf("입력 실패, %d 카테고리는 존재하지 않습니다.\n", category);
   return 0; // 0 이면 입력 실패
 }
 
