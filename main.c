@@ -62,6 +62,8 @@ int main () {
   
 	return 0;
 }
+
+// 용돈을 설정하는 함수입니다.
 void setBalance(int balance, int remains) { // 2
   if (balance < 0 || remains < 0){
     printf("올바른 범위 내의 수를 입력 해주세요.\n");
@@ -72,19 +74,21 @@ void setBalance(int balance, int remains) { // 2
   return;
 }
 
+// 카테고리별 지출을 설정하는 함수입니다. 
 int setSpending(int amount, int category) { // 2
   if (amount < 0 || category < 0){
     printf("올바른 범위 내의 수를 입력 해주세요.\n");
     return 0;
   }
 	if (category < 6 && category > 0) {
-    if (money >= sumSpending() + amount) { spending[category - 1] = amount; return 1; } // 1 이면 입력 성공
+    if (money >= sumSpending() + amount) { spending[category - 1] += amount; return 1; } // 1 이면 입력 성공
     else { printf("입력된 지출이 자금보다 큽니다.\n"); return 0; } // 0 이면 입력 실패
   } 
   printf("입력 실패, %d 카테고리는 존재하지 않습니다.\n", category);
   return 0; // 0 이면 입력 실패
 }
 
+// 카테고리별 지출을 하나의 변수로 더하는 함수입니다.
 int sumSpending() {
   int res = 0;
   for (int i = 0; i<5; i++){
@@ -93,6 +97,7 @@ int sumSpending() {
   return res;
 }
 
+// 현재 지출을 구하고, 권장 소비액을 계산하는 함수입니다.
 void getSpending() {
   int remaining = money;
   int remaining_date = restDate;
@@ -111,6 +116,7 @@ void getSpending() {
   return;
 }
 
+// 카테고리별 누적 지출 금액과 잔액을 보여주는 함수입니다.
 void getStatistics() {
   printf("카테고리별 누적 지출 금액:\n\n");
   printf("식비: %d원\n교통비: %d원\n문화생활: %d원\n쇼핑: %d원\n기타: %d원",spending[0],spending[1],spending[2],spending[3],spending[4]);
